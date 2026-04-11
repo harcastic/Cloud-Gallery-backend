@@ -33,3 +33,12 @@ exports.login = async (req, res) => {
     res.status(500).json({ msg: "Login failed" });
   }
 };
+
+exports.profile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+    res.json(user);
+  } catch {
+    res.status(500).json({ msg: "Error fetching profile" });
+  }
+};
