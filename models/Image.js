@@ -8,6 +8,11 @@ const imageSchema = new mongoose.Schema({
   },
   url: String,
   filename: String,
+  fileType: {
+    type: String,
+    enum: ['image', 'video'],
+    required: true
+  },
   uploadedAt: {
     type: Date,
     default: Date.now

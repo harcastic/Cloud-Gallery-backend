@@ -3,7 +3,12 @@ const router = express.Router();
 const auth = require("../middleware/auth");
 const multer = require("multer");
 
-const upload = multer({ storage: multer.memoryStorage() });
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+
+const upload = multer({ 
+  storage: multer.memoryStorage(),
+  limits: { fileSize: MAX_FILE_SIZE }
+});
 
 const {
   uploadImage,

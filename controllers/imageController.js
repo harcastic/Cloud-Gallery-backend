@@ -8,6 +8,17 @@ exports.uploadImage = async (req, res) => {
 
     if (!file) return res.status(400).json({ msg: "No file uploaded" });
 
+    // Check file size (5MB limit)
+    if (file.size > 5 * 1024 * 1024) {
+      return res.status(400).json({ msg: "File size exceeds 5MB limit" });
+    }
+
+    // Determine file type based on MIME type
+    let fileType = 'image';
+    if (file.mimetype.startsWith('video/')) {
+      fileType = 'video';
+    }
+
     const blobName = uuidv4() + "-" + file.originalname;
 
     const blockBlobClient = containerClient.getBlockBlobClient(blobName);
@@ -21,11 +32,15 @@ exports.uploadImage = async (req, res) => {
     const image = await Image.create({
       userId: req.user.id,
       url: blockBlobClient.url,
-      filename: blobName
+      filename: blobName,
+      fileType: fileType
     });
 
     res.json(image);
   } catch (err) {
+    if (err.message && err.message.includes('File size exceeds')) {
+      return res.status(400).json({ msg: err.message });
+    }
     res.status(500).json({ msg: "Upload failed" });
   }
 };
