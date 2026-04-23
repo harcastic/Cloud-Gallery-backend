@@ -1,0 +1,41 @@
+# 🔐 Secrets (do not ever include these)
+.env
+.env.*
+*.pem
+*.key
+*.crt
+
+# 📦 Node stuff
+node_modules
+npm-debug.log
+yarn-debug.log*
+yarn-error.log*
+
+# 🧪 Testing / coverage
+coverage
+.nyc_output
+
+# 🏗 Build output (React/Vite etc)
+build
+dist
+
+# 🧠 Git junk
+.git
+.gitignore
+
+# 🗑 OS junk
+.DS_Store
+Thumbs.db
+
+# 🧾 Logs
+logs
+*.log
+
+# 🐳 Docker files (optional but cleaner)
+Dockerfile
+docker-compose.yml
+
+# 🧪 Misc
+*.md
+.vscode
+.idea
